@@ -1,19 +1,29 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
 int main() {
-    int N;
+    
+    float N;
+    int result;
     cin >> N;
+    if (N >= 0)
+    {
+        if (N - (int)N >= 0.5)
+            result = (int)N + 1;
+        else result = (int)N;
+    }
+       
+    if (N < 0)
+        if (N - (int)N + 1 > 0.5)
+            result = (int)N;
+        else result = (int)N - 1;
 
-    vector<int> A(N), B(N);
+    cout << result;
 
-    for (int i = 0; i < N; ++i)
-        cin >> A[i];
 
-    for (int i = 0; i < N; ++i)
-        cin >> B[i];
 
-    sort(A.begin(),
+}
