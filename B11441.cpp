@@ -1,55 +1,76 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cmath>
-
 using namespace std;
-long long LEFT[100001];
-long long RIGHT[100001];
-long long CROSS[100001];
-long long SUM[100001];
-long long LEFTSUM[100001];
-long long RIGHTSUM[100001];
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    int N, a;
-        long long result=0;
-    cin >> N;
-    
-    for (int i = 1; i <= N; i++)
-    {
-        cin >> CROSS[i];
-    }
-    for (int i = 1; i < N; i++)
-    {
-        cin >> LEFT[i];
-        LEFTSUM[i] = LEFT[i]+LEFTSUM[i-1];
-    }
-    for (int i = 1; i < N; i++)
-    {
-        cin >> RIGHT[i];
-        RIGHTSUM[i] = RIGHT[i] + RIGHTSUM[i - 1];
-    }
-    for (int i = 1; i <= N; i++){
-        SUM[i] = LEFTSUM[i - 1] + CROSS[i] + RIGHTSUM[N - 1] - RIGHTSUM[i - 1];
-    }
-    
-    SUM[0] = SUM[1];
-    result = SUM[0];
-    a = 1;
-    for(int i=1;i<=N;i++){
+long long A[1000001];
+long long B[1000001];
+long long C[2000002];
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
 
-        if (result > SUM[i])
-        {
-            result = SUM[i];
-            a = i;
+    long long N, M;
+
+    cin >> N>> M;
+
+    for (long long i = 0; i < N; i++)
+    {
+        cin >> A[i];
+    }
+
+    for (long long j = 0; j < M; j++)
+    {
+        cin >> B[j];
+    }
+
+    long long Ap = 0;
+    long long Bp = 0;
+    long long i = 0;
+    while (i < N + M) {
+        if ((Ap == N) || (Bp == M)) {
+            if (Ap == N) {
+                C[i] = B[Bp];
+                Bp++;
+                cout << C[i] << ' ';
+                i++;
+                continue;
+
+            }
+            if (Bp == M) {
+                C[i] = A[Ap];
+                Ap++;
+                cout << C[i] << ' ';
+                i++;
+                continue;
+            }
+          
+
+
         }
+
+
+
+        if (A[Ap] < B[Bp])
+        {
+            C[i] = A[Ap];
+            Ap++;
+           
+            cout << C[i] << ' ';
+            i++;
+            continue;
+            
+        }
+        if (A[Ap] >= B[Bp])
+        {
+            C[i] = B[Bp];
+            
+            Bp++;
+            cout << C[i] << ' ';
+            i++;
+            continue;
+                   }
+
+
+
+    
     }
-    cout << a << " " << result;
-
-   
-
-
-
+    return 0;
 }
