@@ -1,33 +1,44 @@
 #include <iostream>
-#include <list>
 #include <vector>
+using namespace std;
 
 int main() {
-    int N, K;
-    std::cin >> N >> K;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    std::list<int> people;
-    for (int i = 1; i <= N; ++i)
-        people.push_back(i);
+    int N, X;
+    cin >> N >> X;
 
-    std::vector<int> result;
-    auto it = people.begin();
+    vector<int> V(N);
+    for (int i = 0; i < N; i++) {
+        cin >> V[i];
+    }
 
-    while (!people.empty()) {
-        for (int i = 1; i < K; ++i) {
-            ++it;
-            if (it == people.end()) it = people.begin();
+    long long sum = 0;
+    for (int i = 0; i < X; i++) {
+        sum += V[i];
+    }
+
+    long long max_sum = sum;
+    int count = 1;
+
+    for (int i = X; i < N; i++) {
+        sum += V[i] - V[i - X];
+        if (sum > max_sum) {
+            max_sum = sum;
+            count = 1;
         }
-        result.push_back(*it);
-        it = people.erase(it);
-        if (it == people.end()) it = people.begin();
+        else if (sum == max_sum) {
+            count++;
+        }
     }
 
-    std::cout << "<";
-    for (size_t i = 0; i < result.size(); ++i) {
-        std::cout << result[i];
-        if (i != result.size() - 1) std::cout << ", ";
+    if (max_sum == 0) {
+        cout << "SAD\n";
     }
-    std::cout << ">";
+    else {
+        cout << max_sum << "\n" << count << "\n";
+    }
+
     return 0;
 }
